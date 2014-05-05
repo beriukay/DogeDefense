@@ -1,12 +1,10 @@
 ﻿import UnityEngine
 import Erik
-import Grid
 
 class Spawn (MonoBehaviour):
-	static public timer as single = 20
+	static public timer as single = 50
 	public enemy as GameObject
-	
-	private static wave = 0
+	public static wave = 0
 	
 	def Start ():
 		pass
@@ -20,5 +18,5 @@ class Spawn (MonoBehaviour):
 
 	def spawn() :
 		for i in range(wave) :
-			position = Vector3(Random.Range(-Grid.WIDTH, Grid.WIDTH), 0, transform.position.z)
+			position = Vector3(Random.Range(-Globals.WIDTH, Globals.WIDTH), 0, transform.position.z)
 			Instantiate(enemy, position, Quaternion(0, 0, 0, 0))
