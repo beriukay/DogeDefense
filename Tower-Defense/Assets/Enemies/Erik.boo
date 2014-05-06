@@ -11,6 +11,7 @@ class Erik (MonoBehaviour):
 	private moved_right as bool
 	private moving_right as bool
 	private moving_left as bool
+	private elapsed_time as single
 	
 	def Start():
 		hp = 50
@@ -26,22 +27,25 @@ class Erik (MonoBehaviour):
 		if stuck :
 			Globals.delete(target)
 			stuck = false
+			moved_left, moved_right, moving_right, moving_left = false, false, false, false
+		if hp<=0 :
+			Destroy(gameObject)
+		//elapsed_time += Time.deltaTime
+		//if elapsed_time>=1:
+		//	transform.Translate(direction)
+		//	elapsed_time = elapsed_time - cast(int, elapsed_time)
 		transform.Translate(direction * Time.deltaTime)
 
 	def OnTriggerEnter(collider as Collider) :
 		if collider.gameObject.tag == "Erik" :
 			return
 		elif collider.gameObject.tag == "Tower" :
-			select_direction()
 			target = collider.gameObject
+			Debug.Log(target)
 		elif collider.gameObject.tag == "Cannonball" :
 			hp -= Cannonball.damage
-			if hp<=0 :
-				Destroy(gameObject)
 		elif collider.gameObject.tag == "Missile" :
 			hp -= Missile.damage
-			if hp<=0 :
-				Destroy(gameObject)
 
 	def select_direction():
 		pos_x, pos_y = transform.position.x+Globals.WIDTH, transform.position.z+Globals.HEIGHT
@@ -55,10 +59,12 @@ class Erik (MonoBehaviour):
 			moved_right = true
 			moving_right = true
 			moving_left = false
-		elif Globals.grid[pos_x, pos_y] and (moving_left or not moved_left):
+		elif Globals.grid[pos_x-1, pos_y] and (moving_left or not moved_left):
 			direction = Vector3.left
 			moved_left = true
+			moved_right = true
 			moving_left = true
 			moving_right = false
 		else :
+			direction = Vector3(0, 0, 0)
 			stuck = true

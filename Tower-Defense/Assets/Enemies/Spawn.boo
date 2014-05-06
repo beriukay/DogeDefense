@@ -18,5 +18,5 @@ class Spawn (MonoBehaviour):
 
 	def spawn() :
 		for i in range(wave) :
-			position = Vector3(Random.Range(-Globals.WIDTH, Globals.WIDTH), 0, transform.position.z)
+			position = Vector3(Random.Range(-Globals.WIDTH, Globals.WIDTH), 1, transform.position.z)
 			Instantiate(enemy, position, Quaternion(0, 0, 0, 0))

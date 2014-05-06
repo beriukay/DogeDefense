@@ -29,11 +29,14 @@ class Globals(MonoBehaviour):
 			grid[WIDTH*2-1, i] = false
 	
 	def Update():
+		Debug.Log("Pass5")
 		if Input.GetMouseButtonDown(1):
 			building=true
+			Debug.Log("Pass4")
 		elif Input.GetMouseButtonUp(1):
 			building=false
 		elif building :
+			Debug.Log("Pass3")
 			build(WIDTH*Input.mousePosition.x/Screen.width*2-WIDTH, HEIGHT*Input.mousePosition.y/Screen.height*2-HEIGHT)
 		if Input.GetKeyDown(KeyCode.Space) :
 			if speed == 0 :
@@ -59,16 +62,18 @@ class Globals(MonoBehaviour):
 		GUI.TextField(Rect(20, 280, 180, 20), "Right click to build")
 
 	def build(x as int, y as int) :
+		Debug.Log("Pass2")
 		return if x+WIDTH<0 or x>=WIDTH or y+HEIGHT<0 or y>=HEIGHT
 		if grid[x+WIDTH, y+HEIGHT] :
+			Debug.Log("Pass1")
 			if towers[tower] == "Cannon" and money >= 100 :
-				Instantiate(cannon, Vector3(x, 0, y), Quaternion(0, 0, 0, 0))
+				Instantiate(cannon, Vector3(x, 1, y), Quaternion(0, 0, 0, 0))
 				money -= 100
 			elif towers[tower] == "SAM" and money >= 150 :
-				Instantiate(sam, Vector3(x, 0, y), Quaternion(0, 0, 0, 0))
+				Instantiate(sam, Vector3(x, 1, y), Quaternion(0, 0, 0, 0))
 				money -= 150
 			elif towers[tower] == "Wall" and money >= 5 :
-				Instantiate(wall, Vector3(x, 0, y), Quaternion(0, 0, 0, 0))
+				Instantiate(wall, Vector3(x, 1, y), Quaternion(0, 0, 0, 0))
 				money -= 5
 			grid[x+WIDTH, y+HEIGHT] = false
 
