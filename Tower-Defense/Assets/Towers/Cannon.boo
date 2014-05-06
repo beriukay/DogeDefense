@@ -1,7 +1,6 @@
 ﻿class Cannon(Turret):
-	def Start ():
-		reload = 1
-		turn = 5
-		pause = .25
-		cost = 100
-		hitpoints = 50
+	public static reload = 1
+	public static turn = 5
+	public static pause = .25
+	public static cost = 100
+	public static hitpoints = 50

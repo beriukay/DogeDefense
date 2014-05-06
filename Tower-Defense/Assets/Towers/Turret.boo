@@ -6,7 +6,6 @@ class Turret(MonoBehaviour):
 	public turn as single
 	public pause as single
 	public cost as single
-	public static hitpoints as int
 	public target as Transform
 	public muzzle as Transform
 	public this as Transform
@@ -41,10 +40,3 @@ class Turret(MonoBehaviour):
 		next_fire = Time.time+reload
 		next_move = Time.time+pause
 		Instantiate(projectile, muzzle.position, muzzle.rotation)
-
-class Wall(Turret):
-	def Start ():
-		reload = 1
-		turn = 5
-		pause = .1
-		cost = 5
