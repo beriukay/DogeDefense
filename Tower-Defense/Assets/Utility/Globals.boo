@@ -9,7 +9,7 @@ class Globals(MonoBehaviour):
 	public wall as GameObject
 	public static final HEIGHT = 50
 	public static final WIDTH = 50
-	public static grid = matrix(bool, WIDTH*2, HEIGHT*2)
+	public static grid = matrix(int, WIDTH*2, HEIGHT*2)
 	
 	private previous_speed as int
 	private towers = ("Cannon", "SAM", "Wall")
@@ -20,13 +20,10 @@ class Globals(MonoBehaviour):
 	def Start():
 		for i in range(WIDTH*2) :
 			for j in range(HEIGHT*2) :
-				grid[i, j]=true
-		for i in range(WIDTH-5, WIDTH+6) :
-			for j in range(HEIGHT-5, HEIGHT+6) :
-				grid[i, j]=false
+				grid[i, j]=0
 		for i in range(HEIGHT*2) :
-			grid[0, i] = false
-			grid[WIDTH*2-1, i] = false
+			grid[0, i] = Mathf.Infinity
+			grid[WIDTH*2-1, i] = Mathf.Infinity
 	
 	def Update():
 		Debug.Log("Pass5")
@@ -64,21 +61,26 @@ class Globals(MonoBehaviour):
 	def build(x as int, y as int) :
 		Debug.Log("Pass2")
 		return if x+WIDTH<0 or x>=WIDTH or y+HEIGHT<0 or y>=HEIGHT
-		if grid[x+WIDTH, y+HEIGHT] :
+		if grid[x+WIDTH, y+HEIGHT] == 0:
 			Debug.Log("Pass1")
 			if towers[tower] == "Cannon" and money >= 100 :
 				Instantiate(cannon, Vector3(x, 1, y), Quaternion(0, 0, 0, 0))
 				money -= 100
+				grid[x+WIDTH, y+HEIGHT] = Cannon.hitpoints
 			elif towers[tower] == "SAM" and money >= 150 :
 				Instantiate(sam, Vector3(x, 1, y), Quaternion(0, 0, 0, 0))
 				money -= 150
+				grid[x+WIDTH, y+HEIGHT] = SAM.hitpoints
 			elif towers[tower] == "Wall" and money >= 5 :
 				Instantiate(wall, Vector3(x, 1, y), Quaternion(0, 0, 0, 0))
 				money -= 5
-			grid[x+WIDTH, y+HEIGHT] = false
+				grid[x+WIDTH, y+HEIGHT] = 20
+			
 
-	static def delete(target as GameObject):
+	static def damage(target as GameObject):
 		if target :
 			pos_x, pos_y = target.transform.position.x+WIDTH, target.transform.position.z+HEIGHT
-			grid[pos_x, pos_y] = true
-			Destroy(target)
+			grid[pos_x, pos_y] -= 1
+			if grid[pos_x, pos_y] <= 0:
+				Destroy(target)
+				grid[pos_x, pos_y] = 0

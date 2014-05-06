@@ -6,6 +6,7 @@ class Turret(MonoBehaviour):
 	public turn as single
 	public pause as single
 	public cost as single
+	public static hitpoints as int
 	public target as Transform
 	public muzzle as Transform
 	public this as Transform

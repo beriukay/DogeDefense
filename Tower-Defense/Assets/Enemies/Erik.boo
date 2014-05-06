@@ -25,15 +25,12 @@ class Erik (MonoBehaviour):
 	def Update():
 		select_direction()
 		if stuck :
-			Globals.delete(target)
-			stuck = false
+			Globals.damage(target)
+			if not target:
+				stuck = false
 			moved_left, moved_right, moving_right, moving_left = false, false, false, false
 		if hp<=0 :
 			Destroy(gameObject)
-		//elapsed_time += Time.deltaTime
-		//if elapsed_time>=1:
-		//	transform.Translate(direction)
-		//	elapsed_time = elapsed_time - cast(int, elapsed_time)
 		transform.Translate(direction * Time.deltaTime)
 
 	def OnTriggerEnter(collider as Collider) :
@@ -51,15 +48,15 @@ class Erik (MonoBehaviour):
 		pos_x, pos_y = transform.position.x+Globals.WIDTH, transform.position.z+Globals.HEIGHT
 		if pos_x+1>=Globals.WIDTH*2 or pos_y+1>=Globals.HEIGHT*2 or pos_x-1<0:
 			Destroy(gameObject)
-		elif Globals.grid[pos_x, pos_y+1] and Globals.grid[pos_x+1, pos_y+1]:
+		elif Globals.grid[pos_x, pos_y+1]==0 and Globals.grid[pos_x+1, pos_y+1]==0:
 			direction = Vector3.forward
 			moved_left, moved_right, moving_right, moving_left = false, false, false, false
-		elif Globals.grid[pos_x+1, pos_y] and (moving_right or not moved_right) :
+		elif Globals.grid[pos_x+1, pos_y]==0 and (moving_right or not moved_right) :
 			direction = Vector3.right
 			moved_right = true
 			moving_right = true
 			moving_left = false
-		elif Globals.grid[pos_x-1, pos_y] and (moving_left or not moved_left):
+		elif Globals.grid[pos_x-1, pos_y]==0 and (moving_left or not moved_left):
 			direction = Vector3.left
 			moved_left = true
 			moved_right = true

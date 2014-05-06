@@ -4,3 +4,4 @@
 		turn = 5
 		pause = .25
 		cost = 150
+		hitpoints = 75
