@@ -7,6 +7,7 @@ class Globals(MonoBehaviour):
 	public cannon as GameObject
 	public sam as GameObject
 	public wall as GameObject
+	public view as GameObject
 	public static final HEIGHT = 50
 	public static final WIDTH = 50
 	public static grid = matrix(int, WIDTH*2, HEIGHT*2)
@@ -17,9 +18,12 @@ class Globals(MonoBehaviour):
 	private towers = ("Cannon", "SAM", "Wall")
 	private speeds = ("||", "1", "2", "3", "4", "5")
 	private hide = false
+	private view_toggle = false	
 	private building as bool
 	private display_width = 150
 	private displaying as (int)
+	private instantiated as bool
+	private target as GameObject		
 	
 	def Start():
 		for i in range(WIDTH*2) :
@@ -73,6 +77,13 @@ class Globals(MonoBehaviour):
 		speed = GUI.Toolbar(Rect(20, 70, 180, 20), speed, speeds)
 		if GUI.Button(Rect(20, 110, 180, 20), "Next Wave " + Mathf.Floor(Spawn.timer)):
 			Spawn.timer=0
+		if view_toggle = GUI.Toggle(Rect(20, 40, 180, 20), view_toggle, "Toggle View "):
+			if not instantiated:
+				target = Instantiate(view, Vector3(0, 1.05, 0), Quaternion(0, 0, 0, 0))
+				instantiated = true
+		else :
+			Destroy(target)
+			instantiated = false			
 		GUI.TextField(Rect(20, 140, 180, 20), "Money: " + Mathf.Floor(money))
 		GUI.TextField(Rect(20, 170, 180, 20), "Wave: " + Spawn.wave)
 		tower = GUI.SelectionGrid(Rect(20, 230, 180, 40), tower, towers, 2)
