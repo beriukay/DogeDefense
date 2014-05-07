@@ -45,7 +45,6 @@ Makefile*
      
     # All platforms:
 Tower-Defense/Library
-Tower-Defense/Temp
 *.csproj
 *.pidb
 *.unityproj
