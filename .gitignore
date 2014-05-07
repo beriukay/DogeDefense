@@ -44,8 +44,8 @@ Makefile*
 *.Trashes
      
     # All platforms:
-Library
-Temp
+Tower-Defense/Library
+Tower-Defense/Temp
 *.csproj
 *.pidb
 *.unityproj
