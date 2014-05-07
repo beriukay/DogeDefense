@@ -9,6 +9,7 @@ class Turret(MonoBehaviour):
 	public target as Transform
 	public muzzle as Transform
 	public this as Transform
+	public static hitpoints as int = 100
 
 	private next_fire as single
 	private next_move as single
@@ -23,6 +24,7 @@ class Turret(MonoBehaviour):
 				position = target.position - transform.position
 				desired_rotation = Quaternion.LookRotation(position)
 				this.rotation = Quaternion.Lerp(this.rotation, desired_rotation, Time.deltaTime*turn)
+				
 			if Time.time >= next_fire :
 				fire()
 
